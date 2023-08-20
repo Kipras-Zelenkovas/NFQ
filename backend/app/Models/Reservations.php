@@ -11,5 +11,5 @@ class Reservations extends Model
 
     protected $table = "reservations";
 
-    protected $fillable = ['aprox_time', 'code', 'specialist_id'];
+    protected $fillable = ['code', 'specialist_id'];
 }

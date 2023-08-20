@@ -15,17 +15,8 @@ class Reservation extends Controller
     {
         try {
             $specialist = User::inRandomOrder()->first();
-            $latestReservation = $specialist->latest_reservation;
-            $aproxTime = "";
-
-            if (!$latestReservation) {
-                $aproxTime = date("H:i", strtotime("now"));
-            } else {
-                $aproxTime = date("H:i", strtotime($latestReservation->aprox_time . '+15 minutes'));
-            }
 
             $reservation = Reservations::create([
-                'aprox_time'    => $aproxTime,
                 'code'          => Str::random(5),
                 'specialist_id' => $specialist->id,
             ]);
@@ -36,7 +27,6 @@ class Reservation extends Controller
                 'status'    => true,
                 'code'      => $reservation->code,
             ]);
-            return response()->json($aproxTime);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 500);
         }

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->string('aprox_time');
             $table->string('code');
             $table->foreignId('specialist_id');
             $table->timestamps();
