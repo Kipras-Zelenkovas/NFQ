@@ -35,4 +35,5 @@ Route::prefix('reservation')->group(function () {
     Route::post('', [Reservation::class, 'reserve'])->middleware('guest')->name('reservation.reserve');
     Route::delete('', [Reservation::class, 'cancel'])->middleware('guest')->name('reservation.cancel');
     Route::put('', [Reservation::class, 'start'])->middleware('auth:sanctum')->name('reservation.start');
+    Route::post('check', [Reservation::class, 'check'])->middleware('guest')->name('reservation.check');
 });

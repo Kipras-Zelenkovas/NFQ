@@ -43,9 +43,8 @@ class Auth extends Controller
     public function logout(Request $request)
     {
         try {
-            $user = User::where('email', $request->email)->first();
 
-            $user->tokens()->delete();
+            $request->user()->tokens()->delete();
 
             return response()->json([
                 'status'    => true,

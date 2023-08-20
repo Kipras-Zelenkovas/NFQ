@@ -27,7 +27,6 @@ class Reservation extends Controller
             return response()->json([
                 'status'        => true,
                 'code'          => $reservation->code,
-                'specialist'    => $specialist->id
             ]);
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 500);
@@ -73,11 +72,9 @@ class Reservation extends Controller
     public function getUpcoming(Request $request)
     {
         try {
-            $request->validate([
-                'specialist'    => 'required|max:10'
-            ]);
 
-            $reservations = User::find($request->specialist)->reservations->take(8);
+
+            $reservations = Reservations::limit(8)->get();
 
             return response()->json([
                 'status'    => true,
@@ -97,6 +94,31 @@ class Reservation extends Controller
                 'status'    => true,
                 'data'      => $reservations
             ]);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function check(Request $request)
+    {
+        try {
+            $request->validate([
+                'code'  => 'required|string|min:5|max:5'
+            ]);
+
+            $reservation = Reservations::where('code', $request->code)->first();
+
+            if ($reservation === null) {
+                return response()->json([
+                    'status'    => true,
+                    'data'      => false
+                ]);
+            } else {
+                return response()->json([
+                    'status'    => true,
+                    'data'      => true
+                ]);
+            }
         } catch (\Throwable $th) {
             return response()->json($th->getMessage(), 500);
         }
