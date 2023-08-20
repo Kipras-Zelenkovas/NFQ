@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->foreignId('specialist_id');
+            $table->enum('status', ['aranged', 'started']);
             $table->timestamps();
         });
     }
